@@ -10,15 +10,18 @@ class Task extends Model
     	'name',  'project_id', 'member_id', 'start_time', 'end_time', 'content', 'status_id'
     ];
 
-    public function member() {
+    public function member()
+    {
         return $this->belongsTo(Member::class);
     }
 
-    public function project() {
+    public function project()
+    {
     	return $this->belongsTo(Project::class);
     }
 
-    public function status() {
+    public function status()
+    {
     	return $this->hasOne(Status::class);
     }
 }

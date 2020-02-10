@@ -10,11 +10,13 @@ class Status extends Model
     	'name', 'type'
     ];
 
-    public function projects() {
+    public function projects()
+    {
     	return $this->hasMany(Project::class);
     }
 
-    public function tasks() {
+    public function tasks()
+    {
     	return $this->hasMany(Task::class);
     }
 }

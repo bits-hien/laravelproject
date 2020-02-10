@@ -10,7 +10,8 @@ class Customer extends Model
         'name', 'address', 'email', 'phone', 'manager', 'image'
     ];
     
-    public function projects() {
+    public function projects()
+    {
         return $this->hasMany('Project::class');
     }
 }

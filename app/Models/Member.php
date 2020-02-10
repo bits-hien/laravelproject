@@ -10,13 +10,11 @@ class Member extends Model
         'name', 'username', 'password', 'image', 'email', 'phone', 'is_admin'
     ];
     
-    public function projects()
-    {
+    public function projects() {
     	return $this->belongsToMany(Project::class, 'member_project');
     }
 
-    public function tasks()
-    {
+    public function tasks() {
     	return $this->hasMany(Task::class);
     }
 }

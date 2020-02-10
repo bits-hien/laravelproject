@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-    	'name',  'project_id', 'member_id', 'start_time', 'end_time', 'content', 'status_id'
+        'name',  'project_id', 'member_id', 'start_time', 'end_time', 'content', 'status_id'
     ];
 
     public function member()
@@ -17,11 +17,11 @@ class Task extends Model
 
     public function project()
     {
-    	return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function status()
     {
-    	return $this->hasOne(Status::class);
+        return $this->hasOne(Status::class);
     }
 }

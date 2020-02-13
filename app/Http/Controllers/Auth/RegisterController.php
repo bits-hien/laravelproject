@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
+use App\Models\Member;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -39,6 +40,12 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:member');
+    }
+
+    public function showMemberRegisterForm()
+    {
+        return view('auth.register', ['url' => 'member']);
     }
 
     /**
@@ -51,8 +58,12 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'max:255', 'unique:members'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'image' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'is_admin' => ['required', 'tinyinteger', 'max:1']
         ]);
     }
 
@@ -60,14 +71,20 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\Member
      */
+    
     protected function create(array $data)
     {
-        return User::create([
+        
+        return Member::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'username' => $data['username'],
             'password' => Hash::make($data['password']),
+            'image' => $data['image'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'is_admin' => $data['is_admin']
         ]);
     }
 }

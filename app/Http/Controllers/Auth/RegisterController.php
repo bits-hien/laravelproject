@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,12 +41,11 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('guest:member');
     }
 
-    public function showMemberRegisterForm()
+    protected function guard()
     {
-        return view('auth.register', ['url' => 'member']);
+        return Auth::guard('member');
     }
 
     /**

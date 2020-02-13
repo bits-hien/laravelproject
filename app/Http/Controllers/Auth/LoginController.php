@@ -38,29 +38,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('guest:member')->except('logout');
     }
 
-    public function showMemberLoginForm()
+    public function username()
     {
-        return view('auth.loginmember', ['url' => 'member']);
+        return 'username';
     }
 
-    public function memberLogin(Request $request)
+    protected function guard()
     {
-        $this->validate($request, [
-            'username'   => 'required',
-            'password' => 'required|min:6'
-        ]);
-        if (Auth::guard('member')->attempt(['username' => $request->username, 'password' => $request->password], $request->get('remember'))) {
-            return redirect()->route('home');
-        }
-        return back()->withInput($request->only('member', 'remember'));
-    }
-
-    public function memberLogout(Request $request)
-    {
-        Auth::guard('member')->logout(['username' => $request->username, 'password' => $request->password]);
-        return redirect()->route('login_member');
+        return Auth::guard('member');
     }
 }
